@@ -47,3 +47,16 @@ end
 
 # Use devise for user authentication
 gem "devise"
+
+# API Utilities
+gem 'sabisu_rails', github: "IcaliaLabs/sabisu-rails"
+gem 'compass-rails', "~> 2.0.2"
+gem 'furatto'
+gem 'font-awesome-rails'
+gem 'simple_form'
+
+
+
+
+
+
