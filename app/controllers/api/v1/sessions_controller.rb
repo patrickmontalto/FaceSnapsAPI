@@ -15,7 +15,11 @@ class Api::V1::SessionsController < ApplicationController
     end
   end
 
-  # Sign out
+  # Sign out - find user by token and create a new one (invalidate old token)
   def destroy
+  	user = User.find_by(auth_token: params[:id])
+  	user.generate_auth_token!
+  	user.save
+  	head 204
   end
 end
