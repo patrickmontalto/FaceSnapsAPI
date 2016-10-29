@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe Api::V1::UsersController do
-  before(:each) do
-    request.headers['Accept'] = "application/vnd.facesnaps.v1, #{Mime::JSON}"
-    request.headers['Content-Type'] = Mime::JSON.to_s
-  end
-
   describe "GET #show" do
     before(:each) do
       @user = FactoryGirl.create :user

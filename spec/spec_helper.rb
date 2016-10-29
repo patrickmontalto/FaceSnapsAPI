@@ -62,6 +62,13 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :controller
   # Include JsonHelpers as controller helpers
   config.include Request::JsonHelpers, :type => :controller
+  # Include HeadersHelpers as controller helpers
+  config.include Request::HeadersHelpers, :type => :controller
+
+  # Set default headers for each controller spec
+  config.before(:each, type: :controller) do
+    include_default_headers
+  end
 end
 
 # Configure shoulda matchers
