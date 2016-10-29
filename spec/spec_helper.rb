@@ -60,6 +60,8 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   # Include module for all controller specs
   config.include Devise::Test::ControllerHelpers, :type => :controller
+  # Include JsonHelpers as controller helpers
+  config.include Request::JsonHelpers, :type => :controller
 end
 
 # Configure shoulda matchers
