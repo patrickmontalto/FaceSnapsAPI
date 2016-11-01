@@ -6,7 +6,10 @@ describe User do
   subject { @user }
 
   it { should respond_to(:auth_token) }
+  it { should respond_to(:username) }
 
+  it { should validate_presence_of(:username) }
+  it { should validate_uniqueness_of(:username).ignoring_case_sensitivity }
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email).ignoring_case_sensitivity }
   it { should validate_confirmation_of(:password) }
