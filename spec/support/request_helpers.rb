@@ -7,6 +7,11 @@ module Request
 
 	# Helpers for headers
 	module HeadersHelpers
+
+    def api_authorization_header(token)
+      request.headers['Authorization'] = token
+    end
+    
 		def api_header(version = 1)
 			request.headers['Accept'] = "application/vnd.facesnapsapi.v#{version}"
 		end
