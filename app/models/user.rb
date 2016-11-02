@@ -10,5 +10,5 @@ class User < ActiveRecord::Base
   validates :auth_token, uniqueness: true
   validates :username, presence: true, uniqueness: true
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
 end

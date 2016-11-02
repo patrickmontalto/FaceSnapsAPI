@@ -15,8 +15,25 @@ describe User do
   it { should validate_confirmation_of(:password) }
   it { should allow_value('example@domain.com').for(:email) }
 
+  it { should have_many(:posts) }
+
   # Test that the auth_token is unique
   it { should validate_uniqueness_of(:auth_token) }
+
+  describe "#posts association" do
+    before do
+      @user.save
+      3.times { FactoryGirl.create :post, user: @user }
+    end
+
+    it "destroys the associated posts on self destruct" do
+      posts = @user.posts
+      @user.destroy
+      posts.each do |post|
+        expect(Post.find(post)).to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+  end
 
   describe "#generate_auth_token!" do
   	it "generates a unique token" do

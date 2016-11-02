@@ -11,7 +11,13 @@ describe Post do
 
   it { should validate_presence_of :caption }
   it { should validate_presence_of :user_id }
-  it { should validate_presence_of :photo }
+  it { should belong_to :user }
+
+  it "should not allow Post with no photo file" do
+    bad_post = FactoryGirl.build(:post, photo: nil)
+    expect(bad_post).to be_invalid
+  end
+
 
   describe "#tags" do
     it "returns an array of hashtags" do
