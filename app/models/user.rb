@@ -9,4 +9,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   validates :auth_token, uniqueness: true
   validates :username, presence: true, uniqueness: true
+
+  has_many :posts
 end

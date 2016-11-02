@@ -28,6 +28,9 @@ gem 'active_model_serializers'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Use carrierwave to upload files encoded as base64
+gem 'carrierwave-base64'
+
 group :development do
   # Use sqlite3 as the database for Active Record
 	gem 'sqlite3'
