@@ -15,4 +15,18 @@ describe Api::V1::PostsController do
 		it { should respond_with 200 }
 
 	end
+
+  describe "GET #index" do
+    before(:each) do
+      4.times { FactoryGirl.create :post }
+      get :index
+    end
+
+    it "returns 4 records from the database" do
+      posts_response = json_response
+      expect(posts_response.length).to eq(4)
+    end
+
+    it { should respond_with 200 }
+  end
 end
