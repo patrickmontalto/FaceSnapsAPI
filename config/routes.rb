@@ -8,7 +8,9 @@ Rails.application.routes.draw do
                   constraints: { subdomain: 'api' }, path: '/' do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       # List resources here
-      resources :users, :only => [:show, :create, :update, :destroy]
+      resources :users, :only => [:show, :create, :update, :destroy] do
+        resources :posts, :only => [:create]
+      end
       resources :sessions, :only => [:create, :destroy]
       resources :posts, :only => [:show, :index]
     end

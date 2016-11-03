@@ -29,4 +29,44 @@ describe Api::V1::PostsController do
 
     it { should respond_with 200 }
   end
+
+  describe "POST #create" do
+    context "when is successfully created" do
+      before(:each) do
+        user = FactoryGirl.create :user
+        @post_attributes = FactoryGirl.attributes_for :post
+        api_authorization_header user.auth_token
+        post :create, { user_id: user.id, post: @post_attributes }
+      end
+
+      it "renders the json representation for the product record just created" do
+        post_response = json_response
+        expect(post_response[:caption]).to eql @post_attributes[:caption]
+      end
+
+      it { should respond_with 201 }
+    end
+
+    context "when is not created" do
+      before(:each) do
+        user = FactoryGirl.create :user
+        @invalid_post_attributes = { caption: "Testing..." }
+        api_authorization_header user.auth_token
+        post :create, { user_id: user.id, post: @invalid_post_attributes }
+      end
+
+      it "renders an errors json" do
+        post_response = json_response
+        expect(post_response).to have_key(:errors)
+      end
+
+      it "renders the json errors on why the post could not be created" do
+        post_response = json_response
+        expect(post_response[:errors][:photo]).to include "can't be blank"
+      end
+
+      it { should respond_with 422 }
+    end
+
+  end
 end
