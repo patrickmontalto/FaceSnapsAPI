@@ -67,6 +67,47 @@ describe Api::V1::PostsController do
 
       it { should respond_with 422 }
     end
+  end
 
+  describe "PUT/PATCH #update" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      @post = FactoryGirl.create :post, user: @user
+      api_authorization_header @user.auth_token
+    end
+
+    context "when is successfully updated" do
+      before(:each) do
+        patch :update, { user_id: @user.id, id: @post.id,
+               post: { caption: "This is a new caption." } }
+      end
+
+      it "renders the json representation for the updated post" do
+        post_response = json_response
+        expect(post_response[:caption]).to eql "This is a new caption."
+      end
+
+      it { should respond_with 200 }
+    end
+
+    context "when is not updated" do
+      before(:each) do
+        patch :update, { user_id: @user.id, id: @post.id,
+               post: { caption: nil } }
+      end
+
+      it "renders an errors json" do
+        post_response = json_response
+        expect(post_response).to have_key(:errors)
+      end
+
+      it "renders the json errors on why the post could not be created" do
+        post_response = json_response
+        expect(post_response[:errors][:caption]).to include "can't be blank"
+      end
+
+      it { should respond_with 422 }
+    end
   end
 end
+
