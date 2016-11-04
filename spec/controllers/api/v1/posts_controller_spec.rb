@@ -12,6 +12,11 @@ describe Api::V1::PostsController do
 			expect(post_response[:caption]).to eql @post.caption
 		end
 
+    it "has the user as an embedded object" do
+      post_response = json_response[:post]
+      expect(post_response[:user][:email]).to eql @post.user.email
+    end
+
 		it { should respond_with 200 }
 
 	end
@@ -27,6 +32,13 @@ describe Api::V1::PostsController do
       expect(posts_response.length).to eq(4)
     end
 
+    it "returns the user object into each post" do
+      posts_response = json_response[:posts]
+      posts_response.each do |post_response|
+        expect(post_response[:user]).to be_present
+      end
+    end
+
     it { should respond_with 200 }
   end
 
@@ -39,7 +51,7 @@ describe Api::V1::PostsController do
         post :create, { user_id: user.id, post: @post_attributes }
       end
 
-      it "renders the json representation for the product record just created" do
+      it "renders the json representation for the post record just created" do
         post_response = json_response[:post]
         expect(post_response[:caption]).to eql @post_attributes[:caption]
       end
