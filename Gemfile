@@ -32,14 +32,16 @@ gem 'active_model_serializers'
 gem 'carrierwave-base64'
 
 group :development do
-  # Use sqlite3 as the database for Active Record
 	gem 'sqlite3'
+end
+
+group :development, :test do
+	gem "factory_girl_rails"
+	gem "ffaker"
 end
 
 group :test do
 	gem "rspec-rails", "~> 2.14"
-	gem "factory_girl_rails"
-	gem "ffaker"
   gem 'shoulda-matchers'
 end
 
