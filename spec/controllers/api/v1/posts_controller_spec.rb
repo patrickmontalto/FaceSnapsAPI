@@ -8,7 +8,7 @@ describe Api::V1::PostsController do
 		end
 
 		it "rerturns the information about a reporter on a hash" do
-			post_response = json_response
+			post_response = json_response[:post]
 			expect(post_response[:caption]).to eql @post.caption
 		end
 
@@ -23,7 +23,7 @@ describe Api::V1::PostsController do
     end
 
     it "returns 4 records from the database" do
-      posts_response = json_response
+      posts_response = json_response[:posts]
       expect(posts_response.length).to eq(4)
     end
 
@@ -40,7 +40,7 @@ describe Api::V1::PostsController do
       end
 
       it "renders the json representation for the product record just created" do
-        post_response = json_response
+        post_response = json_response[:post]
         expect(post_response[:caption]).to eql @post_attributes[:caption]
       end
 
@@ -83,7 +83,7 @@ describe Api::V1::PostsController do
       end
 
       it "renders the json representation for the updated post" do
-        post_response = json_response
+        post_response = json_response[:post]
         expect(post_response[:caption]).to eql "This is a new caption."
       end
 

@@ -3,18 +3,18 @@ class Api::V1::PostsController < ApplicationController
 	respond_to :json
 
 	def show
-		respond_with Post.find(params[:id])
+    render json: Post.find(params[:id]), :root => "post", adapter: :json
 	end
 
   def index
-    respond_with Post.all
+    render json: Post.all, :root => "posts", adapter: :json
   end
 
   # creating a post will look for current_user (Authorization header, auth_token)
   def create
     post = current_user.posts.build(post_params)
     if post.save
-      render json: post, status: 201, location: [:api, post]
+      render json: post, :root => "post", adapter: :json, status: 201, location: [:api, post]
     else
       render json: { errors: post.errors }, status: 422
     end
@@ -23,7 +23,7 @@ class Api::V1::PostsController < ApplicationController
   def update
     post = current_user.posts.find(params[:id])
     if post.update(post_params)
-      render json: post, status: 200, location: [:api, post]
+      render json: post, :root => "post", adapter: :json, status: 200, location: [:api, post]
     else
       render json: { errors: post.errors}, status: 422
     end
