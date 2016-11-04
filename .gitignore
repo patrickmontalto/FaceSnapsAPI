@@ -15,3 +15,8 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore all uploads for dev/test/tmp
+/public/uploads/development
+/public/uploads/test
+/public/uploads/tmp
