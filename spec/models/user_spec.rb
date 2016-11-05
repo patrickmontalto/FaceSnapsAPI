@@ -20,6 +20,55 @@ describe User do
   # Test that the auth_token is unique
   it { should validate_uniqueness_of(:auth_token) }
 
+  describe "#follow & #unfollow" do
+    let(:other) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+    end
+
+    context "when not following" do
+       it "returns false for user folllowing other user" do
+        expect(@user.following?(other)).to be false
+      end
+
+      it "follows another user" do
+        @user.follow(other)
+        expect(@user.following?(other)).to be true
+      end
+    end
+
+    context "when following" do
+      before do
+        @user.follow(other)
+      end
+
+      it "returns true for user following other user" do
+        expect(@user.following?(other)).to be true
+      end
+
+      it "unfollows another user" do
+        @user.unfollow(other)
+        expect(@user.following?(other)).to be false
+      end
+    end
+  end
+
+  describe "#followers" do
+    let(:other) { FactoryGirl.create(:user) }
+
+    before do
+      @user.save
+      other.save
+      other.follow(@user)
+    end
+
+    it "includes a collection of followers" do
+      expect(@user.followers.count).to eql 1
+      expect(@user.followers.include?(other)).to be true
+    end
+
+  end
+
   describe "#posts association" do
     before do
       @user.save
