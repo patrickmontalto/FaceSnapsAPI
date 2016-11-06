@@ -7,7 +7,7 @@ describe Api::V1::PostsController do
 			get :show, id: @post.id
 		end
 
-		it "rerturns the information about a reporter on a hash" do
+		it "returns the information about a reporter on a hash" do
 			post_response = json_response[:post]
 			expect(post_response[:caption]).to eql @post.caption
 		end
