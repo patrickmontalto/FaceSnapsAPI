@@ -8,6 +8,7 @@ describe Post do
   it { should respond_to(:user_id) }
   it { should respond_to(:tags) }
   it { should respond_to(:photo) }
+  it { should respond_to(:likes) }
 
   it { should validate_presence_of :caption }
   it { should validate_presence_of :user_id }
@@ -22,6 +23,19 @@ describe Post do
   describe "#tags" do
     it "returns an array of hashtags" do
       expect(post.tags).to eql %w(grateful awesome rails)
+    end
+  end
+
+  describe "#like_count" do
+    before do
+      @post = FactoryGirl.create :post
+       3.times do
+        FactoryGirl.create :like, { post: @post }
+      end
+    end
+   
+    it "returns the number of likes it currently has" do
+      expect(@post.like_count).to eql 3
     end
   end
 

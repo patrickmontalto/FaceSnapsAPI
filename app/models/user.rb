@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true
 
   has_many :posts, dependent: :destroy
+  has_many :likes
+  has_many :liked_posts, :through => :likes, :source => :post
 
   # Relationships
   has_many :active_relationships,  -> { where accepted: true },
@@ -58,4 +60,18 @@ class User < ActiveRecord::Base
   def requested_by?(other_user)
     requested_by.include?(other_user)
   end
+
+  # Like a post
+  def like(post)
+    likes.create(post: post)
+  end
+
+  # Unlike a post
+  def unlike(post)
+    if like = Like.find_by(user: self, post: post)
+      like.destroy
+    end
+  end
+
+
 end

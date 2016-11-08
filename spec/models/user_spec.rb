@@ -7,6 +7,7 @@ describe User do
 
   it { should respond_to(:auth_token) }
   it { should respond_to(:username) }
+  it { should respond_to(:liked_posts) }
 
   it { should validate_presence_of(:username) }
   it { should validate_uniqueness_of(:username).ignoring_case_sensitivity }
@@ -96,6 +97,43 @@ describe User do
   		@user.generate_auth_token!
   		expect(@user.auth_token).not_to eql existing_user.auth_token
   	end
+  end
+
+  describe "#liked_posts" do
+    before do
+      @user.save
+      3.times {FactoryGirl.create :like, {user: @user} }
+    end
+
+    it "returns the liked posts of the user" do
+      expect(@user.liked_posts.count).to eql 3
+    end
+  end
+
+  describe "#like" do
+    before do
+      @user.save
+      @post = FactoryGirl.create :post
+      @user.like(@post)
+    end
+
+    it "likes a post" do
+      expect(@user.liked_posts.count).to eql 1
+      expect(@user.liked_posts).to include(@post)
+    end
+  end
+
+  describe "#unlike" do
+    before do
+      @user.save
+      post = FactoryGirl.create :post
+      @user.like(post)
+      @user.unlike(post)
+    end
+    
+    it "unlikes a post" do
+      expect(@user.liked_posts.count).to eql 0
+    end
   end
 
 end
