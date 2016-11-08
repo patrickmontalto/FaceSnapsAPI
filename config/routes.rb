@@ -9,18 +9,11 @@ Rails.application.routes.draw do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       # List resources here
       resources :users, :only => [:show, :create, :update, :destroy] do
-        # collection do
-        #   namespace :self do
-        #     get 'follows', to: "relationships#current_user_follows"
-        #     get 'followed-by', to: "relationships#current_user_followed_by"
-        #     get 'requested-by', to: "relationships#requested_by"
-        #   end
-        # end
         member do
           get 'follows', to: "relationships#follows"
           get 'followed-by', to: "relationships#followed_by"
-          get 'relationship', to: "relationships#show"
-          post 'relationship', to: "relationships#create"
+          get 'relationship', to: "relationships#status"
+          post 'relationship', to: "relationships#manage"
         end
         resources :posts, :only => [:create, :update, :destroy]
       end

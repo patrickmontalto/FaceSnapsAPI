@@ -19,15 +19,23 @@ class User < ActiveRecord::Base
   has_many :passive_relationships, class_name: "Relationship",
                                    foreign_key: "followed_id",
                                    dependent: :destroy
+  # Passive relationships where the follower is approved          
+  has_many :approved_passive_relationships, -> { where accepted: true },
+                                   class_name: "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent: :destroy                                         
+  # Collection of who the user is currently requested by (if the user is private)
+  has_many :requested_by, -> { where( relationships: { accepted: false })}, 
+                            :through => :passive_relationships, :source => :follower
   # Collection of who the user is currently following
   has_many :following, through: :active_relationships, source: :followed
-  # Collection of who the user is followed by
-  has_many :followers, through: :passive_relationships, source: :follower
+  # Collection of who the user is followed by (passive and approved)
+  has_many :followers, through: :approved_passive_relationships, source: :follower
 
-
+ 
   # Follows a user
   def follow(other_user)
-    active_relationships.create(followed_id: other_user.id)
+    active_relationships.create!(followed_id: other_user.id)
   end
 
   # Unfollows a user
@@ -40,4 +48,8 @@ class User < ActiveRecord::Base
     following.include?(other_user)
   end
 
+  # Returns whether or not the user has been requested by the other user
+  def requested_by?(other_user)
+    requested_by.include?(other_user)
+  end
 end
