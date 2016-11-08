@@ -13,24 +13,30 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
 
   # Relationships
-  has_many :active_relationships,  class_name: "Relationship",
+  has_many :active_relationships,  -> { where accepted: true },
+                                   class_name: "Relationship",
                                    foreign_key: "follower_id",
                                    dependent: :destroy
-  has_many :passive_relationships, class_name: "Relationship",
-                                   foreign_key: "followed_id",
+  has_many :pending_active_relationships,  -> { where accepted: false },
+                                   class_name: "Relationship",
+                                   foreign_key: "follower_id",
                                    dependent: :destroy
-  # Passive relationships where the follower is approved          
-  has_many :approved_passive_relationships, -> { where accepted: true },
+  has_many :passive_relationships, -> { where accepted: true },
                                    class_name: "Relationship",
                                    foreign_key: "followed_id",
-                                   dependent: :destroy                                         
-  # Collection of who the user is currently requested by (if the user is private)
-  has_many :requested_by, -> { where( relationships: { accepted: false })}, 
-                            :through => :passive_relationships, :source => :follower
-  # Collection of who the user is currently following
+                                   dependent: :destroy                                      
+  has_many :pending_passive_relationships, -> { where accepted: false },
+                                   class_name: "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent: :destroy
+  # Collection of who the user currently requesting to follow
+  has_many :requesting, :through => :pending_active_relationships, :source => :followed
+  # Collection of who the user is currently requested by
+  has_many :requested_by, :through => :pending_passive_relationships, :source => :follower
+  # Collection of who the user is currently following (active and approved)
   has_many :following, through: :active_relationships, source: :followed
   # Collection of who the user is followed by (passive and approved)
-  has_many :followers, through: :approved_passive_relationships, source: :follower
+  has_many :followers, through: :passive_relationships, source: :follower
 
  
   # Follows a user
