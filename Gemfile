@@ -31,6 +31,10 @@ gem 'active_model_serializers', '~> 0.8.3'
 # Use carrierwave to upload files encoded as base64
 gem 'carrierwave-base64'
 
+# Use kaminari for api pagination
+gem 'kaminari'
+gem 'api-pagination'
+
 group :development do
 	gem 'sqlite3'
 end

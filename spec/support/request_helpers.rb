@@ -8,6 +8,10 @@ module Request
 	# Helpers for headers
 	module HeadersHelpers
 
+    def header_response
+      @header_response
+    end
+
     def api_authorization_header(token)
       request.headers['Authorization'] = token
     end

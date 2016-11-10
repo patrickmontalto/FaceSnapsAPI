@@ -6,6 +6,11 @@ class Post < ActiveRecord::Base
 	validates :caption, :user_id, :photo, presence: true
 	mount_base64_uploader :photo, PhotoUploader
 
+  # Public posts (author is not private)
+  def self.public
+    joins(:user).where(:users => {:private => false })
+  end
+
   def tags
     caption.scan(/\B#\w+/).map { |t| t[1..-1].downcase }
   end

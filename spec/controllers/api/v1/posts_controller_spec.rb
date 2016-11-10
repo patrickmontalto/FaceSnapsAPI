@@ -23,13 +23,13 @@ describe Api::V1::PostsController do
 
   describe "GET #index" do
     before(:each) do
-      4.times { FactoryGirl.create :post }
+      20.times { FactoryGirl.create :post }
       get :index
     end
 
-    it "returns 4 records from the database" do
+    it "returns 10 records from the database" do
       posts_response = json_response[:posts]
-      expect(posts_response.length).to eq(4)
+      expect(posts_response.length).to eq(10)
     end
 
     it "returns the user object into each post" do
@@ -37,6 +37,10 @@ describe Api::V1::PostsController do
       posts_response.each do |post_response|
         expect(post_response[:user]).to be_present
       end
+    end
+
+    it "returns the proper pagination in the header" do
+      expect(response['Link'].split(",")[0]).to include "/posts?page=2"
     end
 
     it { should respond_with 200 }

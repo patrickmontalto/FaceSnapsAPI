@@ -11,11 +11,13 @@ class Api::V1::PostsController < ApplicationController
     end
 	end
 
+  # GET /posts - all public posts
   def index
-    render json: Post.all, :root => "posts", adapter: :json
+    posts = paginate Post.public, per_page: 10
+    render json: posts, :root => "posts", adapter: :json
   end
 
-  # creating a post will look for current_user (Authorization header, auth_token)
+  # Creating a post will look for current_user (Authorization header, auth_token)
   def create
     post = current_user.posts.build(post_params)
     if post.save

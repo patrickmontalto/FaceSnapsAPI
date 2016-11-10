@@ -39,4 +39,16 @@ describe Post do
     end
   end
 
+  describe '#public' do
+    before do
+      user = FactoryGirl.create :user, { private: true }
+      FactoryGirl.create :post, {user: user }
+      2.times { FactoryGirl.create :post }
+    end
+
+    it "returns only public posts" do
+      expect(Post.public.count).to eql 2
+    end
+  end
+
 end
