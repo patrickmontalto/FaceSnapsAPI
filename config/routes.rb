@@ -20,8 +20,15 @@ Rails.application.routes.draw do
       get 'users/self/follows', to: "relationships#current_user_follows"
       get 'users/self/followed-by', to: "relationships#current_user_followed_by"
       get 'users/self/requested-by', to: "relationships#requested_by"
+      get 'users/self/posts/liked', to: "likes#liked_posts"
       resources :sessions, :only => [:create, :destroy]
-      resources :posts, :only => [:show, :index]
+      resources :posts, :only => [:show, :index] do
+        member do
+          resources :likes, :only => [:create]
+          get 'likes', to: "likes#liking_users"
+          delete 'likes', to: "likes#destroy"
+        end
+      end
     end
   end
 end

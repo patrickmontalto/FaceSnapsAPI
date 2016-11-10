@@ -3,7 +3,12 @@ class Api::V1::UsersController < ApplicationController
   respond_to :json
 
   def show
-    render json: User.find(params[:id]), root: "user", adapter: :json
+    user = User.find_by_id(params[:id])
+    if user
+      render json: user, root: "user", adapter: :json
+    else
+      render json: { errors: "User not found" }, status: 422
+    end
   end
 
   def create

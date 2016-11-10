@@ -3,7 +3,12 @@ class Api::V1::PostsController < ApplicationController
 	respond_to :json
 
 	def show
-    render json: Post.find(params[:id]), :root => "post", adapter: :json
+    post = Post.find_by_id(params[:id])
+    if post
+      render json: post, :root => "post", adapter: :json
+    else
+      render json: { errors: "Post not found" }, status: 422
+    end
 	end
 
   def index

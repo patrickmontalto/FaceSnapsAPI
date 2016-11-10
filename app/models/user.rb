@@ -63,15 +63,18 @@ class User < ActiveRecord::Base
 
   # Like a post
   def like(post)
-    likes.create(post: post)
+    like = likes.build(post: post)
+    like.valid? ? like.save : false
   end
 
   # Unlike a post
   def unlike(post)
     if like = Like.find_by(user: self, post: post)
       like.destroy
+      true
+    else
+      false
     end
   end
-
 
 end
