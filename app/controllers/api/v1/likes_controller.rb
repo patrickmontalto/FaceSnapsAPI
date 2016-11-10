@@ -4,7 +4,7 @@ class Api::V1::LikesController < ApplicationController
   # GET /users/self/posts/liked
   def liked_posts
     user = User.find_by(params[:id])
-    render json: { posts: user.liked_posts }, adapter: :json
+    render json: { posts: user.visible_liked_posts(current_user) }, adapter: :json
   end
 
   # GET /posts/id/likes

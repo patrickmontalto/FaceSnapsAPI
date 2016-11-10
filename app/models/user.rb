@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   has_many :following, through: :active_relationships, source: :followed
   # Collection of who the user is followed by (passive and approved)
   has_many :followers, through: :passive_relationships, source: :follower
-
  
   # Follows a user
   def follow(other_user)
@@ -74,6 +73,15 @@ class User < ActiveRecord::Base
       true
     else
       false
+    end
+  end
+
+  #  Only allow seeing like posts if the user is not private or the requesting user is a follower
+  def visible_liked_posts(other_user)
+    if self.followers.include?(other_user) || !self.private?
+      return liked_posts
+    else
+      return nil
     end
   end
 
