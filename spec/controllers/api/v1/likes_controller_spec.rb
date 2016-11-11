@@ -13,33 +13,7 @@ describe Api::V1::LikesController do
         3.times { FactoryGirl.create :like, { user: @user }}
       end
       it "returns a list of the recent posts liked by the current user" do
-        get :liked_posts, { id: @user.id }
-        expect(json_response[:posts].count).to eql 3
-      end
-    end
-    context "when signed in and not a follower" do
-      before do
-        api_authorization_header @user.auth_token
-        @other_user = FactoryGirl.create :user, { private: true }
-        3.times { @other_user.like(FactoryGirl.create :post)}
-      end
-
-      it "does not return a private users liked posts" do
-        get :liked_posts, { id: @other_user.id }
-        expect(json_response[:posts].count).to eql 0
-      end
-    end
-    context "when signed in and a follower" do
-      before do
-        api_authorization_header @user.auth_token
-        @other_user = FactoryGirl.create :user, { private: true }
-        3.times { @other_user.like(FactoryGirl.create :post)}
-        rel = FactoryGirl.create :relationship, { followed: @other_user, follower: @user, accepted: true}
-        rel.update(accepted: true)
-      end
-
-      it "returns a private users liked posts" do
-        get :liked_posts, { id: @other_user.id }
+        get :liked_posts
         expect(json_response[:posts].count).to eql 3
       end
     end
