@@ -10,13 +10,16 @@ Rails.application.routes.draw do
       # List resources here
       resources :users, :only => [:show, :create, :update, :destroy] do
         member do
-          get 'follows', to: "relationships#follows"
-          get 'followed-by', to: "relationships#followed_by"
-          get 'relationship', to: "relationships#status"
+          get  'follows',      to: "relationships#follows"
+          get  'followed-by',  to: "relationships#followed_by"
+          get  'relationship', to: "relationships#status"
           post 'relationship', to: "relationships#manage"
+          get  'posts/recent', to: "posts#user_recent"
         end
         resources :posts, :only => [:create, :update, :destroy]
       end
+      get 'users/self', to: "users#self"
+      get 'users/self/posts/recent', to: "posts#current_user_recent"
       get 'users/self/follows', to: "relationships#current_user_follows"
       get 'users/self/followed-by', to: "relationships#current_user_followed_by"
       get 'users/self/requested-by', to: "relationships#requested_by"

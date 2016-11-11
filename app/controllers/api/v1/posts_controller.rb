@@ -1,5 +1,5 @@
 class Api::V1::PostsController < ApplicationController
-  before_action :authenticate_with_token!, only: [:update, :create]
+  before_action :authenticate_with_token!, only: [:update, :create, :current_user_recent, :user_recent]
 	respond_to :json
 
 	def show
@@ -10,6 +10,22 @@ class Api::V1::PostsController < ApplicationController
       render json: { errors: "Post not found" }, status: 422
     end
 	end
+
+  # GET /users/self/posts/recent
+  def current_user_recent
+    user_recent(current_user)
+  end
+
+  # GET /users/id/posts/recent * privacy enabled
+  def user_recent(user = nil)
+    user ||= User.find_by_id(params[:id])
+    if user == current_user || (current_user.following?(user) || !user.private?)
+      posts = paginate user.recent_posts, per_page: 20
+      render json: posts, :root => "posts", adapter: :json
+    else
+      render json: { errors: "Unable to get posts from user" }, status: 422
+    end
+  end
 
   # GET /posts - all public posts
   def index

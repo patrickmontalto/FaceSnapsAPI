@@ -3,7 +3,8 @@ class Api::V1::LikesController < ApplicationController
 
   # GET /users/self/posts/liked
   def liked_posts
-    render json: { posts: current_user.liked_posts }, adapter: :json
+    posts = paginate current_user.liked_posts, per_page: 20
+    render json: { posts: posts }, adapter: :json
   end
 
   # GET /posts/id/likes

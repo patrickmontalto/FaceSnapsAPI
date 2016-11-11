@@ -21,6 +21,62 @@ describe Api::V1::PostsController do
 
 	end
 
+  describe 'GET #current_user_recent' do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      2.times { FactoryGirl.create :post, {user: @user}}
+      api_authorization_header @user.auth_token
+    end
+
+    context "when signed in" do
+      it "returns a paginated list of current_user posts" do
+        get :current_user_recent
+        expect(json_response[:posts].count).to eql 2
+      end
+    end
+  end
+
+  describe 'GET #user_recent' do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      api_authorization_header @user.auth_token
+    end
+
+    context "when signed in" do
+      context "and folllowing" do
+        context "a private user" do
+          before do
+            @private_user = FactoryGirl.create :user, { private: true }
+            rel = FactoryGirl.create :relationship, { follower: @user, followed: @private_user}
+            rel.update(accepted: true)
+            3.times { FactoryGirl.create :post, { user: @private_user }}
+          end
+          it "returns a paginated list of user posts" do
+            get :user_recent, { id: @private_user.id }
+            expect(json_response[:posts].count).to eql 3
+          end
+        end
+        context "a public user" do
+          before do
+            @public_user = FactoryGirl.create :user, { private: false }
+            FactoryGirl.create :relationship, { follower: @user, followed: @public_user, accepted: true}
+            4.times { FactoryGirl.create :post, { user: @public_user }}
+          end
+          it "returns a paginated list of user posts" do
+            get :user_recent, { id: @public_user.id }
+            expect(json_response[:posts].count).to eql 4
+          end
+        end
+      end
+      context "and not following" do
+        context "a private user" do
+          it "returns an errors json" do
+          end
+        end
+      end
+    end
+  end
+
   describe "GET #index" do
     before(:each) do
       20.times { FactoryGirl.create :post }

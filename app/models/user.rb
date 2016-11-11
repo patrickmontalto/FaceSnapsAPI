@@ -60,6 +60,11 @@ class User < ActiveRecord::Base
     requested_by.include?(other_user)
   end
 
+  # Returns posts in descending order
+  def recent_posts
+    posts.reverse_order
+  end
+
   # Like a post
   def like(post)
     like = likes.build(post: post)
