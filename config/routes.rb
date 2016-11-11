@@ -16,14 +16,18 @@ Rails.application.routes.draw do
           post 'relationship', to: "relationships#manage"
           get  'posts/recent', to: "posts#user_recent"
         end
-        resources :posts, :only => [:create, :update, :destroy]
       end
-      get 'users/self', to: "users#self"
-      get 'users/self/posts/recent', to: "posts#current_user_recent"
-      get 'users/self/follows', to: "relationships#current_user_follows"
-      get 'users/self/followed-by', to: "relationships#current_user_followed_by"
-      get 'users/self/requested-by', to: "relationships#requested_by"
-      get 'users/self/posts/liked', to: "likes#liked_posts"
+      get    'users/self', to: "users#self"
+      post   'users/self/posts', to: "posts#create"
+      put    'users/self/posts/:id', to: "posts#update"
+      patch  'users/self/posts/:id', to: "posts#update"
+      delete 'users/self/posts/:id', to: "posts#destroy"
+      get    'users/self/posts/recent', to: "posts#current_user_recent"
+      get    'users/self/follows', to: "relationships#current_user_follows"
+      get    'users/self/followed-by', to: "relationships#current_user_followed_by"
+      get    'users/self/requested-by', to: "relationships#requested_by"
+      get    'users/self/posts/liked', to: "likes#liked_posts"
+
       resources :sessions, :only => [:create, :destroy]
       resources :posts, :only => [:show, :index] do
         member do
@@ -31,6 +35,7 @@ Rails.application.routes.draw do
           get 'likes', to: "likes#liking_users"
           delete 'likes', to: "likes#destroy"
         end
+        resources :comments, :only => [:index, :create, :destroy]
       end
     end
   end

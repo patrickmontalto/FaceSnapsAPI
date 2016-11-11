@@ -1,5 +1,6 @@
 class Api::V1::LikesController < ApplicationController
   before_action :authenticate_with_token!
+  respond_to :json
 
   # GET /users/self/posts/liked
   def liked_posts
