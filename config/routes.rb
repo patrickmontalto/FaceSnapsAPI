@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get    'users/self/followed-by', to: "relationships#current_user_followed_by"
       get    'users/self/requested-by', to: "relationships#requested_by"
       get    'users/self/posts/liked', to: "likes#liked_posts"
+      get    'users/self/feed', to: "feed#show"
 
       resources :sessions, :only => [:create, :destroy]
       resources :posts, :only => [:show, :index] do
