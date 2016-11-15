@@ -5,8 +5,9 @@ class Api::V1::CommentsController < ApplicationController
   # GET /posts/post_id/comments
   def index
     post = Post.find_by_id(params[:post_id])
+    comments = paginate post.comments, per_page: 5
     if post
-      render json: post.comments, :root => "comments", adapter: :json
+      render json: comments, :root => "comments", adapter: :json
     else
       render json: { errors: "Post not found." }, status: 422
     end
@@ -15,7 +16,6 @@ class Api::V1::CommentsController < ApplicationController
   # POST /posts/post_id/comments
   def create
     post = Post.find_by_id(params[:post_id])
-
     author = post.user
     if reject_via_privacy?(author)
       render json: { errors: "Unable to comment on post" }, status: 422

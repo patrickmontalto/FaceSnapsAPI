@@ -8,11 +8,13 @@ describe Api::V1::CommentsController do
         api_authorization_header @user.auth_token
         @post = FactoryGirl.create :post
         3.times { FactoryGirl.create :comment, { post: @post }}
+        @last_comment = FactoryGirl.create :comment, { post: @post }
       end
 
-      it "gets a list of comments on a post object" do
+      it "gets a list of comments on a post object in reverse order" do
         get :index, { post_id: @post.id }
-        expect(json_response[:comments].count).to eql 3 
+        expect(json_response[:comments].count).to eql 4
+        expect(json_response[:comments].first[:id]).to eql @last_comment.id
       end
     end
   end
