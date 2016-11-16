@@ -110,7 +110,6 @@ describe Api::V1::UsersController do
 
   end
 
-
   describe "DELETE #destroy" do
     before(:each) do
       @user = FactoryGirl.create :user
@@ -119,6 +118,23 @@ describe Api::V1::UsersController do
     end
 
     it { should respond_with 204 }
+
+  end
+
+
+  describe "GET #search" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      api_authorization_header @user.auth_token
+      FactoryGirl.create :user, { username:  'xmichael_scott'}
+      FactoryGirl.create :user, { full_name: 'Michael' }
+      FactoryGirl.create :user, { username:  'boris_99' }
+    end
+
+    it "returns a list of users with username or full name like query param" do
+      get :search, { query: 'michael' }
+      expect(json_response[:users].count).to eql 2
+    end
 
   end
 

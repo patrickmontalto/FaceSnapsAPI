@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_with_token!, only: [:update, :destroy, :self]
+  before_action :authenticate_with_token!, only: [:update, :destroy, :self, :search]
   respond_to :json
 
   def self
@@ -39,10 +39,14 @@ class Api::V1::UsersController < ApplicationController
     head 204
   end
 
+  def search
+    users = paginate User.search(params[:query]), per_page: 10
+    render json: users, root: "users", adapter: :json
+  end
+
   private
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :username)
+      params.require(:user).permit(:email, :password, :password_confirmation, :username, :full_name)
     end
-
 end
