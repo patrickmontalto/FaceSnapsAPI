@@ -4,7 +4,7 @@ class Api::V1::FeedController < ApplicationController
   # GET /users/self/feed
   def show
     feed = Feed.new(current_user)
-    posts = paginate feed.posts, per_page: 10
+    posts = paginate feed.posts, per_page: 20
     render json: posts, :root => "posts", adapter: :json
   end
 

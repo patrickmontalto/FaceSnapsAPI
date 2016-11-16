@@ -29,7 +29,7 @@ class Api::V1::PostsController < ApplicationController
 
   # GET /posts - all public posts
   def index
-    posts = paginate Post.public, per_page: 10
+    posts = paginate Post.public, per_page: 20
     render json: posts, :root => "posts", adapter: :json
   end
 

@@ -40,7 +40,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def search
-    users = paginate User.search(params[:query]), per_page: 10
+    users = paginate User.search(params[:query]), per_page: 20
     render json: users, root: "users", adapter: :json
   end
 
