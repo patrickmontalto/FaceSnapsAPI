@@ -14,9 +14,11 @@ describe Tag do
     awesome_tag = FactoryGirl.create :tag, { name: "awesome" }
     post1 = FactoryGirl.create :post, { caption: "#awesome stuff"}
     post2 = FactoryGirl.create :post, { caption: "this is #awesome #great" }
-    FactoryGirl.create :tagging, { tag: awesome_tag, taggable_id: post1.id, taggable_type: 'Post' }
-    FactoryGirl.create :tagging, { tag: awesome_tag, taggable_id: post2.id, taggable_type: 'Post' }
+    post3 = FactoryGirl.create :post, { caption: "this isn't in the result." }
+    FactoryGirl.create :tagging, { tag: awesome_tag, taggable: post1 }
+    FactoryGirl.create :tagging, { tag: awesome_tag, taggable: post2 }
+    user = FactoryGirl.create :user
 
-    expect(awesome_tag.visible_posts.count).to eql 2
+    expect(awesome_tag.visible_posts(user).count).to eql 2
   end
 end

@@ -31,9 +31,9 @@ Rails.application.routes.draw do
       get    'users/search', to: "users#search"
 
       # Tags
-      get 'tags/:tag_name', to: 'tags#show'
-      get 'tags/:tag_name/posts/recent', to: 'tags#posts'
-      get 'tags/search', to: 'tags#search'
+      get 'tags/:tag_name', to: "tags#show"
+      get 'tags/:tag_name/posts/recent', to: "tags#posts"
+      get 'tags/search', to: "tags#search"
       
       resources :sessions, :only => [:create, :destroy]
       resources :posts, :only => [:show, :index] do

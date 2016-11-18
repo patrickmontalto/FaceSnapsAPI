@@ -22,6 +22,7 @@ describe Post do
 
   describe "#tags" do
     it "returns an array of hashtags" do
+      post.run_callbacks(:commit)
       expect(post.tags).to eql %w(grateful awesome rails)
     end
   end
@@ -48,6 +49,20 @@ describe Post do
 
     it "returns only public posts" do
       expect(Post.public.count).to eql 2
+    end
+  end
+
+  describe "#set_tags" do
+    it "creates taggings for tags on post" do
+      post = FactoryGirl.create :post, { caption: "#amazing post right here. #testing" }
+      post.run_callbacks(:commit)
+      user = FactoryGirl.create :user
+
+      amazing_tag = Tag.find_by(name: "amazing")
+
+      expect(post.tags.count).to eql 2
+      expect(amazing_tag.visible_posts(user)).to include post
+
     end
   end
 
