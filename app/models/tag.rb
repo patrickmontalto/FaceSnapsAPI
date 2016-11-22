@@ -21,8 +21,4 @@ class Tag < ActiveRecord::Base
     Tag.where("name like ?", "%#{query}%")
   end
 
-  def as_json(options = {})
-    super.as_json(options).merge({:post_count => 2 })
-  end
-
 end

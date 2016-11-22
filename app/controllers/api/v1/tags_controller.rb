@@ -19,6 +19,7 @@ class Api::V1::TagsController < ApplicationController
   # GET /tags/search
    def search
     tags = paginate Tag.search(params[:query]), per_page: 20
+    # Calculate (visible) posts count for each tag
     for tag in tags do
       tag.tagged_posts = tag.posts_count(current_user)
     end

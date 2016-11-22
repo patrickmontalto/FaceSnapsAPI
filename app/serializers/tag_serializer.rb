@@ -1,3 +1,4 @@
 class TagSerializer < ActiveModel::Serializer
-  attributes :id, :name, :post_count
+  attributes :id, :name
+  attribute :tagged_posts, key: :posts_count
 end
