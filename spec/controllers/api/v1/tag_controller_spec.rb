@@ -68,7 +68,6 @@ describe Api::V1::TagsController do
 
         expect(json_response[:tags].count).to eql 3
         expect(json_response[:tags][0][:name]).to eql "snowy"
-        puts json_response
         expect(json_response[:tags][0][:posts_count]).to eql 2
       end
 
