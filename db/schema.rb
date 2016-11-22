@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161116161441) do
+ActiveRecord::Schema.define(version: 20161122170300) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -29,6 +29,14 @@ ActiveRecord::Schema.define(version: 20161116161441) do
   end
 
   add_index "likes", ["post_id", "user_id"], name: "index_likes_on_post_id_and_user_id", unique: true
+
+  create_table "locations", force: :cascade do |t|
+    t.decimal  "latitude"
+    t.decimal  "longitude"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "posts", force: :cascade do |t|
     t.string   "caption",    default: ""
