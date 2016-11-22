@@ -9,6 +9,7 @@ describe Post do
   it { should respond_to(:tags) }
   it { should respond_to(:photo) }
   it { should respond_to(:likes) }
+  it { should respond_to(:location) }
 
   it { should validate_presence_of :caption }
   it { should validate_presence_of :user_id }
@@ -23,7 +24,7 @@ describe Post do
   describe "#tags" do
     it "returns an array of hashtags" do
       post.run_callbacks(:commit)
-      expect(post.tags).to eql %w(grateful awesome rails)
+      expect(post.tags.count).to eql 3
     end
   end
 

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :location do
-    latitude "9.99"
-    longitude "9.99"
-    name "MyString"
+    latitude { FFaker::Geolocation.lat }
+    longitude { FFaker::Geolocation.lng }
+    name { FFaker::AddressCHDE.street_name }
   end
 end
