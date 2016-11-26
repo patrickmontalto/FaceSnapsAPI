@@ -98,14 +98,23 @@ GEM
     factory_girl_rails (4.7.0)
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
+    faraday (0.10.0)
+      multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.10.1)
+      faraday (>= 0.7.4, < 1.0)
     ffaker (2.2.0)
     ffi (1.9.14)
     font-awesome-rails (4.7.0.0)
       railties (>= 3.2, < 5.1)
+    foursquare2 (2.0.2)
+      faraday (~> 0.8)
+      faraday_middleware (>= 0.8)
+      hashie (>= 1.0, < 4.0.0)
     furatto (1.5.0)
       compass-rails (~> 2.0, >= 2.0.4)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    hashie (3.4.6)
     hike (1.2.3)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
@@ -130,6 +139,7 @@ GEM
     minitest (5.9.1)
     multi_json (1.12.1)
     multi_xml (0.5.5)
+    multipart-post (2.0.0)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     orm_adapter (0.5.0)
@@ -236,6 +246,7 @@ DEPENDENCIES
   factory_girl_rails
   ffaker
   font-awesome-rails
+  foursquare2
   furatto
   jquery-rails
   kaminari

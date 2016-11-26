@@ -19,8 +19,13 @@ class Api::V1::LocationsController < ApplicationController
 	# GET /locations/search
 	def search
 		# Get lat and lng
+		lat = params[:lat]
+		lng = params[:lng]
+		query = params[:query]
 		# Submit to FourSquare API with distance of 500m
+		results = FourSquareClient.instance.get_venues(lat, lng, query)
 		# Return paginated list via json { :venue_id, :latitude, :longitude, :name }
+		render json: { :data => results }
 	end
 
 end

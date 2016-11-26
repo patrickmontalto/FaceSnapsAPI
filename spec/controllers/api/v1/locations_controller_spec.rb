@@ -50,11 +50,18 @@ describe Api::V1::LocationsController do
 			before(:each) do
 	      @user = FactoryGirl.create :user
 	      api_authorization_header @user.auth_token
+	      @test_data = [{:id=>"4bdd46e14ffaa59350276ff7", :name=>"J.Co Donuts & Coffee", :lat=>40.703917, :lng=>-74.004673}, 
+	      					   {:id=>"4e4dd631bd4101d0d79c5ed3", :name=>"Dunkin' Donuts", :lat=>40.707857980915406, :lng=>-74.00186944936608}, 
+	      						 {:id=>"51ed7f8d498e595e275f31f4", :name=>"Hot Fresh Donuts", :lat=>40.70403030125524, :lng=>-74.00770549769048}]
+	      allow_any_instance_of(FourSquareClient).to receive(:get_venues).and_return(@test_data)
 	    end
 
 	    it "returns a list of locations for a given query" do
-	    end
+	    	get :search, :lat => 40.7, :lng => -74, :query => 'donuts'
 
+	    	expect(json_response[:data].first).to eql @test_data.first
+	    	expect(json_response[:data].count).to eql 3
+	    end
 
 		end
 	end

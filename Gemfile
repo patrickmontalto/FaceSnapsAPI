@@ -35,6 +35,9 @@ gem 'carrierwave-base64'
 gem 'kaminari'
 gem 'api-pagination'
 
+# Use foursquare v2 API
+gem 'foursquare2'
+
 group :development do
 	gem 'sqlite3'
 end

@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       # Locations
       get 'locations/:venue_id', to: 'locations#show'
       get 'locations/:venue_id/posts/recent', to: 'locations#posts'
+      get 'locations/search', to: 'locations#search'
 
       resources :sessions, :only => [:create, :destroy]
       resources :posts, :only => [:show, :index] do
