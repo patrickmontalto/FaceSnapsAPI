@@ -53,6 +53,36 @@ describe Post do
     end
   end
 
+  describe '#save_with_location' do
+    before(:each) do
+      @post = FactoryGirl.build :post
+      @location = {:id=>"4bdd46e14ffaa59350276ff7", :name=>"J.Co Donuts & Coffee", :lat=>40.703917, :lng=>-74.004673}
+    end
+
+    context "when the location already exists in the datbase" do
+      before do
+        Location.create(:venue_id => @location[:id], 
+                        :name => @location[:name], 
+                        :latitude => @location[:lat], 
+                        :longitude => @location[:lng])
+      end
+      it "saves only the association" do
+        @post.save_with_location(@location)
+
+        expect(@post.location.name).to eql @location[:name]
+        expect(Location.count).to eql 1
+      end
+    end
+
+    context "when the location does not exist in the database" do
+      it "creates a new location entry and saves the association" do
+        @post.save_with_location(@location)
+
+        expect(@post.location.name).to eql @location[:name]
+        expect(Location.count).to eql 1      end
+    end
+  end
+
   describe "#set_tags" do
     it "creates taggings for tags on post" do
       post = FactoryGirl.create :post, { caption: "#amazing post right here. #testing" }

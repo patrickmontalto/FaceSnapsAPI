@@ -18,6 +18,11 @@ class Post < ActiveRecord::Base
     joins(:user).where(:users => {:private => false })
   end
 
+  def save_with_location(location)
+    save!
+    set_location(location)
+  end
+
   def as_json(options = {})
     super.as_json(options).merge({:tags => tags})
   end
@@ -33,5 +38,16 @@ class Post < ActiveRecord::Base
       for tag in tags
         Tagging.create(tag: tag, taggable: self)
       end
+    end
+
+    def set_location(location)
+      loc = Location.find_by(venue_id: location[:id])
+      if !loc
+        loc = Location.create( venue_id: location[:id],
+                               latitude: location[:lat],
+                               longitude: location[:lng],
+                               name: location[:name])
+      end
+      self.location = loc
     end
 end
