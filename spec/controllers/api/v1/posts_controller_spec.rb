@@ -79,13 +79,13 @@ describe Api::V1::PostsController do
 
   describe "GET #index" do
     before(:each) do
-      20.times { FactoryGirl.create :post }
+      22.times { FactoryGirl.create :post }
       get :index
     end
 
     it "returns 10 records from the database" do
       posts_response = json_response[:posts]
-      expect(posts_response.length).to eq(10)
+      expect(posts_response.length).to eq(20)
     end
 
     it "returns the user object into each post" do

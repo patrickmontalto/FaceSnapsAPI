@@ -7,7 +7,8 @@ class Post < ActiveRecord::Base
   has_many :liking_users, :through => :likes, :source => :user
   has_many :taggings, :as => :taggable
   has_many :tags, :through => :taggings
-
+  has_one :post_location
+  has_one :location, :through => :post_location
 
 	validates :caption, :user_id, :photo, presence: true
 	mount_base64_uploader :photo, PhotoUploader

@@ -35,6 +35,10 @@ Rails.application.routes.draw do
       get 'tags/:tag_name/posts/recent', to: "tags#posts"
       get 'tags/search', to: "tags#search"
       
+      # Locations
+      get 'locations/:venue_id', to: 'locations#show'
+      get 'locations/:venue_id/posts/recent', to: 'locations#posts'
+
       resources :sessions, :only => [:create, :destroy]
       resources :posts, :only => [:show, :index] do
         member do
