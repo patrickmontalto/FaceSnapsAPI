@@ -26,3 +26,5 @@ set :puma_workers, 0
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 set :puma_preload_app, false
+
+set :default_env, { rvm_bin_path: '~/.rvm/bin' }
