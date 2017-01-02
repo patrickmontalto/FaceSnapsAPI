@@ -19,15 +19,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # API Gems
 gem 'active_model_serializers', '~> 0.8.3'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 # Use carrierwave to upload files encoded as base64
 gem 'carrierwave-base64'
 
@@ -38,8 +29,28 @@ gem 'api-pagination'
 # Use foursquare v2 API
 gem 'foursquare2'
 
+# Use devise for user authentication
+gem "devise"
+
+# API Utilities
+gem 'sabisu_rails', github: "IcaliaLabs/sabisu-rails"
+gem 'compass-rails', "~> 2.0.2"
+gem 'furatto'
+gem 'font-awesome-rails'
+gem 'simple_form'
+
+# Use puma as the application server
+gem 'puma'
+gem 'figaro'
+
 group :development do
 	gem 'sqlite3'
+  gem 'spring'
+  gem 'capistrano'
+  gem 'capistrano3-puma'
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rvm'
 end
 
 group :development, :test do
@@ -52,23 +63,6 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
 end
-
-group :development do
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-end
-
-# Use devise for user authentication
-gem "devise"
-
-# API Utilities
-gem 'sabisu_rails', github: "IcaliaLabs/sabisu-rails"
-gem 'compass-rails', "~> 2.0.2"
-gem 'furatto'
-gem 'font-awesome-rails'
-gem 'simple_form'
-
-
 
 
 
