@@ -43,6 +43,10 @@ gem 'simple_form'
 gem 'puma'
 gem 'figaro'
 
+group :production do
+  gem 'pg'
+end
+
 group :development do
 	gem 'sqlite3'
   gem 'spring'
