@@ -169,6 +169,7 @@ GEM
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     orm_adapter (0.5.0)
+    pg (0.18.4)
     puma (3.6.0)
     rack (1.6.5)
     rack-test (0.6.3)
@@ -286,6 +287,7 @@ DEPENDENCIES
   furatto
   jquery-rails
   kaminari
+  pg
   puma
   rails (= 4.2.7)
   rspec-rails (~> 3.1)
