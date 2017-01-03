@@ -32,7 +32,6 @@ gem 'foursquare2'
 gem "devise"
 
 # API Utilities
-gem 'sabisu_rails', github: "IcaliaLabs/sabisu-rails"
 gem 'compass-rails', "~> 2.0.2"
 gem 'furatto'
 gem 'font-awesome-rails'
@@ -47,6 +46,7 @@ group :production do
 end
 
 group :development do
+  gem 'sabisu_rails', github: "IcaliaLabs/sabisu-rails"
 	gem 'sqlite3'
   gem 'spring'
   gem 'capistrano'
