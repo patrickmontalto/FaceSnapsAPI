@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   # end
   devise_for :users
   # Api definition
-  namespace :api, defaults: { format: :json },
-                  constraints: { subdomain: 'api' }, path: '/' do
+  namespace :api, defaults: { format: :json }, path: '/' do
+                  #constraints: { subdomain: 'api' }, 
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       # List resources here
       resources :users, :only => [:show, :create, :update, :destroy] do
