@@ -7,6 +7,8 @@ This API is a mock of the Instagram API. It serves as the backend for the FaceSn
 
 POST /users/sign_up -> Sign up a new user (requires password, email, fullname, and username)
 
+POST /users/sign_up/check_availability -> Submit either a username or email to see if it is available (submit as user_credential)
+
 GET/users/self -> Get information about the owner of the access token
 
 GET /users/**user-id** -> get information about a user
