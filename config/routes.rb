@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get    'users/self/posts/liked', to: "likes#liked_posts"
       get    'users/self/feed', to: "feed#show"
       get    'users/search', to: "users#search"
+      post   'users/sign_up/check_availability', to: "registrations#check_availability"
 
       # Tags
       get 'tags/:tag_name', to: "tags#show"

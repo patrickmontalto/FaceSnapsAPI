@@ -14,6 +14,16 @@ class Api::V1::RegistrationsController < ApplicationController
     end
   end
 
+  def check_availability
+    user_credential = params[:user_credential]
+    user = User.find_by(email: user_credential) || User.find_by(username: user_credential)
+    if user.nil? 
+      render json: { available: true }
+    else
+      render json: { available: false }
+    end
+  end
+
   private 
 
     def user_params

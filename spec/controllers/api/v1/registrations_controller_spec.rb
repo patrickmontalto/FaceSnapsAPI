@@ -19,4 +19,24 @@ describe Api::V1::RegistrationsController do
     end
 
   end
+
+  describe "POST #check_availability" do
+    context "when not available" do
+      it "returns the availability as false" do
+        @user = FactoryGirl.create :user
+
+        post :check_availability, { user_credential: @user.email }
+
+        expect(json_response[:available]).to eql false
+      end
+    end
+
+    context "when available" do
+      it "returns the availability as true" do
+        post :check_availability, { user_credential: "test_email@gmail.com" }
+
+        expect(json_response[:available]).to eql true
+      end
+    end
+  end
 end
