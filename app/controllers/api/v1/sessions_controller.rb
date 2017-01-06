@@ -2,16 +2,20 @@ class Api::V1::SessionsController < ApplicationController
 	# Sign in
   def create
     user_password = params[:session][:password]
-    user_email = params[:session][:email]
-    user = user_email.present? && User.find_by(email: user_email)
+    user_credential = params[:session][:credential]
+    user = User.find_by(email: user_credential) || User.find_by(username: user_credential)
 
-    if user.valid_password? user_password
+    if user.nil?
+      render json: { errors: { title: "Incorrect username", 
+                              message: "The username you entered doesn't appear to belong to an account. 
+                                        Please check your username and try again." } }
+    elsif user.valid_password? user_password
       sign_in user, store: false
       user.generate_auth_token!
       user.save
       render json: user, status: 200, location: [:api, user]
     else
-      render json: { errors: "Invalid email or password" }, status: 422
+      render json: { errors: {title: "Incorrect password for #{user_credential}", message: "The password you entered is incorrect. Please try again." } }, status: 422
     end
   end
 

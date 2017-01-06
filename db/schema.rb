@@ -39,8 +39,6 @@ ActiveRecord::Schema.define(version: 20161123190559) do
     t.string   "venue_id"
   end
 
-  add_index "locations", ["venue_id"], name: "index_locations_on_venue_id", unique: true
-
   create_table "post_locations", force: :cascade do |t|
     t.integer "post_id"
     t.integer "location_id"
