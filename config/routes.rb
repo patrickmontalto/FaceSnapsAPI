@@ -19,6 +19,7 @@ Rails.application.routes.draw do
           get  'posts/recent', to: "posts#user_recent"
         end
       end
+      post   'users/sign_up', to: "registrations#create"
       get    'users/self', to: "users#self"
       post   'users/self/posts', to: "posts#create"
       put    'users/self/posts/:id', to: "posts#update"
