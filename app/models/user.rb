@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   has_many :likes
   has_many :liked_posts, :through => :likes, :source => :post
 
+  mount_base64_uploader :photo, PhotoUploader
+
   # Relationships
   has_many :active_relationships,  -> { where accepted: true },
                                    class_name: "Relationship",
