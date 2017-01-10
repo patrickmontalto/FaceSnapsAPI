@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   validates :auth_token, uniqueness: true
-  validates :username, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: {case_sensitive: false }
   validates :full_name, presence: true
 
   has_many :posts, dependent: :destroy
