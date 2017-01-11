@@ -3,7 +3,9 @@ class Api::V1::RegistrationsController < ApplicationController
 
   def create
     user = User.create(user_params)
+    photo_base64 = ActiveSupport::JSON.decode(request.raw_post)["photo"]
     if user.save
+      user.update_attributes(photo: photo_base64)
       sign_in user, store: false
       user.generate_auth_token!
       user.save
