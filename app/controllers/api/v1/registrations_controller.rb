@@ -15,9 +15,12 @@ class Api::V1::RegistrationsController < ApplicationController
   end
 
   def check_availability
-    user_credential = params[:user_credential]
+    user_credential = params[:user_credential].downcase
     user = User.find_by(email: user_credential) || User.find_by(username: user_credential)
-    if user.nil? 
+
+    if user_credential.length < 3
+      render json: { available: false }
+    elsif user.nil? 
       render json: { available: true }
     else
       render json: { available: false }
