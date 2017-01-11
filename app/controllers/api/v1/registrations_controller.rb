@@ -3,9 +3,12 @@ class Api::V1::RegistrationsController < ApplicationController
 
   def create
     user = User.create(user_params)
-    photo_base64 = ActiveSupport::JSON.decode(request.raw_post)["photo"]
+    request_body = ActiveSupport::JSON.decode(request.raw_post)
     if user.save
-      user.update_attributes(photo: photo_base64)
+      if request_body
+        photo_base64 = request_body["photo"]
+        user.update_attributes(photo: photo_base64)
+      end
       sign_in user, store: false
       user.generate_auth_token!
       user.save
@@ -32,6 +35,6 @@ class Api::V1::RegistrationsController < ApplicationController
   private 
 
     def user_params
-      params.require(:user).permit(:username, :full_name, :email, :password)
+      params.require(:user).permit(:username, :full_name, :email, :password, :photo)
     end
 end
