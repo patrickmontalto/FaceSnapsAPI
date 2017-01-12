@@ -1,4 +1,5 @@
 class Post < ActiveRecord::Base
+  include Base64encodable
   after_commit :set_tags
 
 	belongs_to :user
