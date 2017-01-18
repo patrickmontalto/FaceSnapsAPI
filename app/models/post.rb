@@ -1,5 +1,6 @@
 class Post < ActiveRecord::Base
   include Base64encodable
+  include Photoable
   after_commit :set_tags
 
 	belongs_to :user

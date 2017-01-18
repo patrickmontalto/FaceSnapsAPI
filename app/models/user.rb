@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 	include Tokenable
   include Base64encodable
+  include Photoable
 	# Create an authentication token for user
 	before_create :generate_auth_token!
 
