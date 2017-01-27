@@ -11,11 +11,10 @@ describe Api::V1::LocationsController do
 
 	    it 'returns information about the location' do
 	    	get :show, :venue_id => @location.venue_id
-
 	    	expect(json_response[:data][:venue_id]).to eql @location.venue_id
 	    	expect(json_response[:data][:name]).to eql @location.name
-	    	expect(json_response[:data][:lat]).to eql "#{@location.latitude.to_f}"
-	    	expect(json_response[:data][:lng]).to eql "#{@location.longitude.to_f.to_s}"
+	    	expect(json_response[:data][:latitude]).to eql "#{@location.latitude.to_f}"
+	    	expect(json_response[:data][:longitude]).to eql "#{@location.longitude.to_f.to_s}"
 	    end
 
 		end

@@ -7,7 +7,7 @@ class Api::V1::SessionsController < ApplicationController
 
     if user.nil?
       render json: { errors: { title: "Incorrect username", 
-                              message: "The username you entered doesn't appear to belong to an account. Please check your username and try again." } }
+                              message: "The username you entered doesn't appear to belong to an account. Please check your username and try again." } }, status: 422
     elsif user.valid_password? user_password
       sign_in user, store: false
       user.generate_auth_token!

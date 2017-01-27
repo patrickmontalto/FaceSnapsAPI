@@ -11,7 +11,7 @@ describe Api::V1::SessionsController do
 		context "when the credentials are correct" do
 
 			before(:each) do 
-				 credentials = { email: @user.email, password: "12345678" }
+				 credentials = { credential: @user.email, password: "12345678" }
 				 post :create, { session: credentials }
 			end
 
@@ -26,12 +26,13 @@ describe Api::V1::SessionsController do
 		context "when the credentials are incorrect" do
 			
 			before(:each) do
-				credentials = { email: @user.email, password: "wrongpassword" }
+				credentials = { credential: @user.email, password: "wrongpassword" }
 				post :create, { session: credentials }
 			end	
 
 			it "returns json with an error" do
-				expect(json_response[:errors]).to eql "Invalid email or password"
+				expect(json_response[:errors][:title]).to eql "Incorrect password for #{@user.email}"
+        expect(json_response[:errors][:message]).to eql "The password you entered is incorrect. Please try again."
 			end
 
 			it { should respond_with 422 }

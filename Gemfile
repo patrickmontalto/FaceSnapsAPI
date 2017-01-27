@@ -16,7 +16,7 @@ gem 'rails', '4.2.7'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # API Gems
-gem 'active_model_serializers', '~> 0.8.3'
+gem 'active_model_serializers', '~> 0.9.6'
 
 # Use carrierwave to upload files encoded as base64
 gem 'carrierwave-base64'

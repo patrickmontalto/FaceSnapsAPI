@@ -3,7 +3,8 @@ class Api::V1::RegistrationsController < ApplicationController
 
   def create
     user = User.create(user_params)
-    request_body = ActiveSupport::JSON.decode(request.raw_post)
+    json = request.raw_post.to_json
+    request_body = ActiveSupport::JSON.decode(json)
     if user.save
       if request_body
         photo_base64 = request_body["photo"]

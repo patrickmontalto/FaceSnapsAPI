@@ -23,7 +23,7 @@ class Api::V1::TagsController < ApplicationController
     for tag in tags do
       tag.tagged_posts = tag.posts_count(current_user)
     end
-    render json: tags, root: "tags"
+    render json: tags, root: "tags", adapter: :json, each_serializer: TagSerializer
   end
 
 end

@@ -29,6 +29,11 @@ class Post < ActiveRecord::Base
     super.as_json(options).merge({:tags => tags})
   end
 
+  # Is the post liked by the current user?
+  def liked_by_user?(user)
+    user.liked_posts.include?(self)
+  end
+
   def like_count
     likes.count
   end

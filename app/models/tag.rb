@@ -1,4 +1,5 @@
 class Tag < ActiveRecord::Base
+  include ActiveModel::Serialization
   attr_accessor :tagged_posts
   
   has_many :taggings
