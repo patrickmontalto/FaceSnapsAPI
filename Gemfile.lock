@@ -281,6 +281,3 @@ DEPENDENCIES
   simple_form
   spring
   sqlite3
-
-BUNDLED WITH
-   1.10.6

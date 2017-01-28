@@ -5,7 +5,7 @@ class TagSerializer < ActiveModel::Serializer
     if scope.current_user.nil?
       object.posts.public.uniq.count
     else
-      posts_count(scope.current_user)
+      object.posts_count(scope.current_user)
     end
   end
 end
