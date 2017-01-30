@@ -13,7 +13,7 @@ class Comment < ActiveRecord::Base
   private 
 
     def set_tags
-      tags = TagParser.parse(caption)
+      tags = TagParser.parse(text)
       for tag in tags
         Tagging.create(tag: tag, taggable: self)
       end
