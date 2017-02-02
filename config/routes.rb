@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get    'users/self/requested-by', to: "relationships#requested_by"
       get    'users/self/posts/liked', to: "likes#liked_posts"
       get    'users/self/feed', to: "feed#show"
+      get    'users/self/feed/post_ids', to: "feed#post_ids"
       get    'users/search', to: "users#search"
       get   'users/sign_up/check_availability', to: "registrations#check_availability"
 

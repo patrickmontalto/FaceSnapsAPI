@@ -8,4 +8,10 @@ class Api::V1::FeedController < ApplicationController
     render json: posts, :root => "posts", adapter: :json
   end
 
+  def post_ids
+    feed = Feed.new(current_user)
+    post_ids_array = feed.posts.map { |post| post.id }
+    render json: { posts_ids: post_ids_array }, status: 200
+  end
+
 end
