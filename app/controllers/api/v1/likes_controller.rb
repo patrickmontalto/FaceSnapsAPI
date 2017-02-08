@@ -11,13 +11,13 @@ class Api::V1::LikesController < ApplicationController
 
   # GET /posts/id/likes
   def liking_users
-    post = Post.find_by(params[:id])
+    post = Post.find(params[:id])
     render json: { users: post.liking_users }, adapter: :json
   end
 
   # POST /posts/id/likes
   def create
-    post = Post.find_by(params[:id])
+    post = Post.find(params[:id])
     if current_user.like(post)
       render json: { meta: { code: 200 }, data: nil }, status: 200
     else
@@ -27,7 +27,7 @@ class Api::V1::LikesController < ApplicationController
 
   # DELETE /posts/id/likes
   def destroy 
-    post = Post.find_by(params[:id])
+    post = Post.find(params[:id])
     if current_user.unlike(post)
       render json: { meta: { code: 200 }, data: nil }, status: 200
     else

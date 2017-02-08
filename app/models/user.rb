@@ -72,6 +72,9 @@ class User < ActiveRecord::Base
 
   # Like a post
   def like(post)
+    # if liked_posts.include?(post)
+    #   return false
+    # end
     like = likes.build(post: post)
     like.valid? ? like.save : false
   end
