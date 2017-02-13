@@ -1,14 +1,15 @@
 class Api::V1::RegistrationsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   respond_to :json
 
   def create
     user = User.create(user_params)
     json = request.raw_post.to_json
-    request_body = ActiveSupport::JSON.decode(json)
     if user.save
-      if request_body
-        photo_base64 = request_body["photo"]
-        user.update_attributes(photo: photo_base64)
+      # Note: Photo must be accessed from params in order to avoid escaping characters and invalid base64 strings
+      base64_image = params["photo"]
+      if base64_image
+        user.update_attributes(photo: base64_image)
       end
       sign_in user, store: false
       user.generate_auth_token!
