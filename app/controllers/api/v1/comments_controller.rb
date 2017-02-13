@@ -1,11 +1,12 @@
 class Api::V1::CommentsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_action :authenticate_with_token!
   respond_to :json
 
   # GET /posts/post_id/comments
   def index
     post = Post.find_by_id(params[:post_id])
-    comments = paginate post.comments, per_page: 5
+    comments = paginate post.comments, per_page: 20
     if post
       render json: comments, :root => "comments", adapter: :json
     else
@@ -24,7 +25,7 @@ class Api::V1::CommentsController < ApplicationController
 
     comment = post.comments.build(comment_params)
     if comment.save
-      render json: {meta: {code: 200} }, status: 200
+      render json: {meta: {code: 200}, comment: comment }, status: 200
     else
       render json: { errors: comment.errors }, status: 422
     end
