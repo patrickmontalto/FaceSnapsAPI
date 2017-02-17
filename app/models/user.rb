@@ -44,6 +44,18 @@ class User < ActiveRecord::Base
   has_many :following, through: :active_relationships, source: :followed
   # Collection of who the user is followed by (passive and approved)
   has_many :followers, through: :passive_relationships, source: :follower
+
+  def posts_count
+    posts.count
+  end
+
+  def followers_count
+    followers.count
+  end
+
+  def following_count
+    following.count
+  end
  
   # Follows a user
   def follow(other_user)
