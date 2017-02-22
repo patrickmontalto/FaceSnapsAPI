@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_action :authenticate_with_token!, only: [:update, :destroy, :self, :search]
   respond_to :json
 
