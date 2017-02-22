@@ -12,13 +12,14 @@ class Api::V1::PostsController < ApplicationController
 	end
 
   # GET /users/self/posts/recent
-  def current_user_recent
-    user_recent(current_user)
-  end
+  # def current_user_recent
+  #   posts = paginate current_user.recent_posts, per_page: 20
+  #   render json: posts, :root => "posts", adapter: :json
+  # end
 
   # GET /users/id/posts/recent * privacy enabled
-  def user_recent(user = nil)
-    user ||= User.find_by_id(params[:id])
+  def user_recent
+    user = User.find_by_id(params[:id])
     if user == current_user || (current_user.following?(user) || !user.private?)
       posts = paginate user.recent_posts, per_page: 20
       render json: posts, :root => "posts", adapter: :json

@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       put    'users/self/posts/:id', to: "posts#update"
       patch  'users/self/posts/:id', to: "posts#update"
       delete 'users/self/posts/:id', to: "posts#destroy"
-      get    'users/self/posts/recent', to: "posts#current_user_recent"
+      #get    'users/self/posts/recent', to: "posts#current_user_recent"
       get    'users/self/follows', to: "relationships#current_user_follows"
       get    'users/self/followed-by', to: "relationships#current_user_followed_by"
       get    'users/self/requested-by', to: "relationships#requested_by"
