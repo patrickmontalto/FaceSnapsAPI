@@ -1,5 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :full_name, :email, :created_at, :updated_at, :auth_token, :photo_path, :following, :posts_count, :followers_count, :following_count
+  attributes :id, :username, :full_name, :email, :created_at, :updated_at, :auth_token, 
+  :photo_path, :following, :posts_count, :followers_count, :following_count, :private
 
   def following
     if scope.current_user.nil?

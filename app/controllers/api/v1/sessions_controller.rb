@@ -3,7 +3,7 @@ class Api::V1::SessionsController < ApplicationController
   def create
     user_password = params[:session][:password]
     user_credential = params[:session][:credential]
-    user = User.find_by(email: user_credential) || User.find_by(username: user_credential)
+    user = User.where("lower(email) = ?", user_credential.downcase).first || User.where("lower(username) = ?", user_credential.downcase).first
 
     if user.nil?
       render json: { errors: { title: "Incorrect username", 

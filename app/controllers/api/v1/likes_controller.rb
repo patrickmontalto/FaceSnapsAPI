@@ -6,13 +6,15 @@ class Api::V1::LikesController < ApplicationController
   # GET /users/self/posts/liked
   def liked_posts
     posts = paginate current_user.liked_posts, per_page: 20
-    render json: { posts: posts }, adapter: :json
+    posts_json = ActiveModel::ArraySerializer.new(posts, each_serializer: PostSerializer, scope: view_context)
+    render json: { posts: posts_json }, adapter: :json
   end
 
   # GET /posts/id/likes
   def liking_users
     post = Post.find(params[:id])
-    render json: { users: post.liking_users }, adapter: :json
+    users_json = ActiveModel::ArraySerializer.new(post.liking_users, each_serializer: UserSerializer, scope: view_context)
+    render json: { users: users_json }, adapter: :json
   end
 
   # POST /posts/id/likes
