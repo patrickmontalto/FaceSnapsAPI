@@ -70,7 +70,7 @@ class Api::V1::RelationshipsController < ApplicationController
 
     def follow_user(user)
       relationship = Relationship.find_or_create_by(follower_id: current_user.id, followed_id: user.id)
-      if relationship.accepted
+      if relationship != nil && relationship.accepted
         render json: { data: { outgoing_status: "follows" } }, status: 200
       else
         render json: { data: { outgoing_status: "requested" } }, status: 200
@@ -79,8 +79,8 @@ class Api::V1::RelationshipsController < ApplicationController
 
     def unfollow_user(user)
       relationship = Relationship.find_by(follower_id: current_user.id, followed_id: user.id)
-      if relationship.destroy
-        render json: { data: { outgoing_status: "none" } }, status: 204
+      if relationship != nil && relationship.destroy
+        render json: { data: { outgoing_status: "none" } }, status: 200
       else
         render json: { errors: "Unable to unfollow user" }, status: 422
       end
