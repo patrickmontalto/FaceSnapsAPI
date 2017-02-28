@@ -10,7 +10,8 @@ class Api::V1::RelationshipsController < ApplicationController
 	# GET /users/user-id/follows
 	def follows(user = nil)
 		user ||= User.find(params[:id])
-		render json: { users: user.following }
+    users_json = ActiveModel::ArraySerializer.new(user.following, each_serializer: UserSerializer, scope: view_context)
+		render json: { users: users_json }
 	end
 
 	# GET /users/self/followed-by
@@ -19,9 +20,10 @@ class Api::V1::RelationshipsController < ApplicationController
 	end
 
 	# GET /users/user-id/followed-by
-	def followed_by(user)
+	def followed_by(user = nil)
 		user ||= User.find(params[:id])
-    render json: { users: user.followers }
+    users_json = ActiveModel::ArraySerializer.new(user.followers, each_serializer: UserSerializer, scope: view_context)
+    render json: { users: users_json }
 	end
 
 	# GET /users/self/requested-by
