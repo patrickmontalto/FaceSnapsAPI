@@ -1,5 +1,6 @@
 class Api::V1::RelationshipsController < ApplicationController
 	before_action :authenticate_with_token!
+  skip_before_filter :verify_authenticity_token
 	respond_to :json
 
 	# GET /users/self/follows
