@@ -1,4 +1,6 @@
 class Api::V1::LocationsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+
   before_action :authenticate_with_token!
 
 	# GET /locations/:venue-id
@@ -16,7 +18,7 @@ class Api::V1::LocationsController < ApplicationController
 		render json: { :data => {:posts => posts} }, adapter: :json
 	end
 
-	# GET /locations/search
+	# POST /locations/search
 	def search
 		# Get lat and lng
 		lat = params[:lat]
