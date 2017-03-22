@@ -44,7 +44,7 @@ describe Api::V1::LocationsController do
 		end
 	end
 
-	describe 'GET #search' do
+	describe 'POST #search' do
 		context 'when signed in' do
 			before(:each) do
 	      @user = FactoryGirl.create :user
@@ -56,7 +56,7 @@ describe Api::V1::LocationsController do
 	    end
 
 	    it "returns a list of locations for a given query" do
-	    	get :search, :lat => 40.7, :lng => -74, :query => 'donuts'
+	    	post :search, :lat => 40.7, :lng => -74, :query => 'donuts'
 
 	    	expect(json_response[:data].first).to eql @test_data.first
 	    	expect(json_response[:data].count).to eql 3
