@@ -1,4 +1,5 @@
 class Api::V1::PostsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_action :authenticate_with_token!, only: [:update, :create, :current_user_recent, :user_recent]
 	respond_to :json
 
