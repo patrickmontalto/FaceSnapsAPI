@@ -21,8 +21,15 @@ class Post < ActiveRecord::Base
   end
 
   def save_with_location(location)
-    save!
-    set_location(location)
+    if save
+      if location != nil
+        set_location(location)
+      else
+        return true
+      end
+    else
+      return false
+    end
   end
 
   def as_json(options = {})

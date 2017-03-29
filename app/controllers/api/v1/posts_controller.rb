@@ -38,7 +38,8 @@ class Api::V1::PostsController < ApplicationController
   # Creating a post will look for current_user (Authorization header, auth_token)
   def create
     post = current_user.posts.build(post_params)
-    if post.save
+    location = params[:location]
+    if post.save_with_location(location)
       render json: post, :root => "post", adapter: :json, status: 201, location: [:api, post]
     else
       render json: { errors: post.errors }, status: 422
@@ -65,5 +66,9 @@ class Api::V1::PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:caption, :photo)
     end
+
+    # def location_params
+    #   params.require(:location).permit(:id, :lat, :lng, :name)
+    # end
 
 end

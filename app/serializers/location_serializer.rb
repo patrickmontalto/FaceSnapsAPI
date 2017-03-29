@@ -1,6 +1,11 @@
 class LocationSerializer < ActiveModel::Serializer
-  attribute :id
-  attributes :venue_id,  :name
-  attribute  :latitude,  key: :lat
-  attribute  :longitude, key: :lng
+	attributes :id, :venue_id, :name, :lat, :lng
+	
+  def lat
+  	object.latitude
+  end
+
+  def lng
+  	object.longitude
+  end
 end
