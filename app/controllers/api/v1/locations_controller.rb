@@ -15,7 +15,8 @@ class Api::V1::LocationsController < ApplicationController
 		location = Location.find_by(venue_id: params[:venue_id])
 		posts = paginate location.posts, :per_page => 20
 
-		render json: { :data => {:posts => posts} }, adapter: :json
+    render json: posts, :root => "posts", adapter: :json
+		#render json: { :data => {:posts => posts} }, adapter: :json
 	end
 
 	# POST /locations/search
