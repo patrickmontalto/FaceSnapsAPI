@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       # Tags
       get 'tags/:tag_name', to: "tags#show"
       get 'tags/:tag_name/posts/recent', to: "tags#posts"
-      get 'tags/search', to: "tags#search"
+      post 'tags/search', to: "tags#search"
       
       # Locations
       get 'locations/:venue_id', to: 'locations#show'

@@ -10,7 +10,8 @@ class Tag < ActiveRecord::Base
   def visible_posts(user)
     public_ids = User.where(private: false).pluck(:id)
     post_user_ids = public_ids | user.following_ids
-    posts.where(user_id: post_user_ids).order('created_at DESC')
+    available_posts = posts.where(user_id: post_user_ids).order('created_at DESC')
+    available_posts.uniq
   end
 
   def posts_count(user)
