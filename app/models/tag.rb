@@ -5,7 +5,7 @@ class Tag < ActiveRecord::Base
   has_many :taggings
   has_many :posts, :through => :taggings, :source => :taggable, :source_type => 'Post'
   has_many :comments, :through => :taggings, :source => :taggable, :source_type => 'Comment'
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, :uniqueness => {:case_sensitive => false}
 
   def visible_posts(user)
     public_ids = User.where(private: false).pluck(:id)

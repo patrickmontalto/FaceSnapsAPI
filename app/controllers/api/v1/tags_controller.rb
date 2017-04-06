@@ -10,7 +10,7 @@ class Api::V1::TagsController < ApplicationController
 
   # GET tags/tag-name/posts/recent
   def posts
-    tag = Tag.find_by(name: params[:tag_name])
+    tag = Tag.find_by(name: params[:tag_name].downcase)
     posts = paginate tag.visible_posts(current_user), per_page: 20
 
     render json: posts, root: "posts", adapter: :json
